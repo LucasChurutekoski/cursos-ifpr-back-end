@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id         String @id @default(uuid())
+  name       String
+  email      String @unique
+  tipoAcesso String @default("USUARIO")
+
+  matricula Matricula[]
+}
+
+model Curso {
+  id           String @id @default(uuid())
+  titulo       String
+  descricao    String
+  cargaHoraria Int
+
+  categoriaId String
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+
+  matricula Matricula[]
+}
+
+model Categoria {
+  id        String @id @default(uuid())
+  nome      String
+  descricao String
+
+  cursos Curso[]
+}
+
+model Matricula {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  cursoId String
+  curso   Curso  @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  alunoId String
+  aluno   User   @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  @@unique([alunoId, cursoId])
+}
