@@ -5,6 +5,6 @@ export class CreateUserDto {
   name!: string;
   @IsEmail()
   email!: string;
-  @IsOptional()
+  @IsString()
   tipoAcesso! : string
 }

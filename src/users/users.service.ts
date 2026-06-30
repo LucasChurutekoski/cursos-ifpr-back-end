@@ -22,7 +22,8 @@ export class UsersService {
     const user = await this.prisma.user.create({
       select : {
         name : true,
-        email : true
+        email : true,
+        tipoAcesso: true
       },
       data: {
         name: dto.name,
@@ -37,7 +38,8 @@ export class UsersService {
       select: {
         id: true,
         name: true,
-        email: true
+        email: true,
+        tipoAcesso: true
       },
     });
   }
@@ -48,6 +50,7 @@ export class UsersService {
         id: true,
         name: true,
         email: true,
+        tipoAcesso: true,
       },
     });
     if (!user) {
